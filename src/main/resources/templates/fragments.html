@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' · ' + ${profile.fullName}">Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:fragment="header(active)" class="site-header">
+    <div class="container header-inner">
+        <a class="brand" th:href="@{/}" th:text="${profile.fullName}">Portfolio</a>
+        <nav class="nav">
+            <a th:href="@{/}" th:classappend="${active == 'home'} ? ' active'">Home</a>
+            <a th:href="@{/about}" th:classappend="${active == 'about'} ? ' active'">About</a>
+            <a th:href="@{/services}" th:classappend="${active == 'services'} ? ' active'">Services</a>
+            <a th:href="@{/contact}" th:classappend="${active == 'contact'} ? ' active'">Contact</a>
+            <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Admin</a>
+            <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="inline-form">
+                <button type="submit" class="link-button">Logout</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="site-footer">
+    <div class="container">
+        <p th:text="'© ' + ${#dates.format(#dates.createNow(), 'yyyy')} + ' ' + ${profile.fullName}">© Portfolio</p>
+    </div>
+</footer>
+
+<aside th:fragment="admin-nav(active)" class="admin-nav">
+    <a th:href="@{/admin}" th:classappend="${active == 'dashboard'} ? ' active'">Dashboard</a>
+    <a th:href="@{/admin/profile}" th:classappend="${active == 'profile'} ? ' active'">Profili</a>
+    <a th:href="@{/admin/services}" th:classappend="${active == 'services'} ? ' active'">Shërbimet</a>
+    <a th:href="@{/admin/qualifications}" th:classappend="${active == 'qualifications'} ? ' active'">Kualifikimet</a>
+    <a th:href="@{/admin/certifications}" th:classappend="${active == 'certifications'} ? ' active'">Certifikimet</a>
+    <a th:href="@{/admin/messages}" th:classappend="${active == 'messages'} ? ' active'">Mesazhet</a>
+    <a th:href="@{/}">Faqja publike</a>
+</aside>
+</body>
+</html>

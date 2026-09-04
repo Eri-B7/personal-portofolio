@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body class="admin-body">
+<header th:replace="~{fragments :: header('admin')}"></header>
+<main class="container admin-layout">
+    <aside th:replace="~{fragments :: admin-nav(${activePage})}"></aside>
+    <section>
+        <h1>Profili</h1>
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+        <form th:action="@{/admin/profile}" th:object="${profile}" method="post" class="form">
+            <label>Emri <input type="text" th:field="*{firstName}" required></label>
+            <label>Mbiemri <input type="text" th:field="*{lastName}" required></label>
+            <label>URL e fotos <input type="text" th:field="*{photoUrl}"></label>
+            <label>Programi i studimit <input type="text" th:field="*{studyProgram}"></label>
+            <label>Email <input type="email" th:field="*{email}"></label>
+            <label>Bio e shkurtër <textarea th:field="*{shortBio}" rows="5" required></textarea></label>
+            <button type="submit" class="btn primary">Ruaj</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

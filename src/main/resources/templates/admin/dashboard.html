@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body class="admin-body">
+<header th:replace="~{fragments :: header('admin')}"></header>
+<main class="container admin-layout">
+    <aside th:replace="~{fragments :: admin-nav(${activePage})}"></aside>
+    <section>
+        <h1>Panel administrimi</h1>
+        <p class="lead">Këtu e menaxhon vetë faqen: profilin, shërbimet, kualifikimet, certifikimet dhe mesazhet.</p>
+
+        <div class="stats">
+            <div class="stat"><span th:text="${serviceCount}">0</span><label>Shërbime</label></div>
+            <div class="stat"><span th:text="${qualificationCount}">0</span><label>Kualifikime</label></div>
+            <div class="stat"><span th:text="${certificationCount}">0</span><label>Certifikime</label></div>
+            <div class="stat"><span th:text="${unreadMessages}">0</span><label>Mesazhe</label></div>
+        </div>
+
+        <div class="cards">
+            <article class="card">
+                <h2>Profili</h2>
+                <p>Emri, mbiemri, foto, bio, programi i studimit.</p>
+                <a class="btn primary" th:href="@{/admin/profile}">Ndrysho profilin</a>
+            </article>
+            <article class="card">
+                <h2>Shërbimet</h2>
+                <p>Shto / ndrysho / fshi opsionet që ofron.</p>
+                <a class="btn primary" th:href="@{/admin/services}">Menaxho shërbimet</a>
+            </article>
+            <article class="card">
+                <h2>Kualifikimet</h2>
+                <p>Bachelor, Master dhe studime.</p>
+                <a class="btn primary" th:href="@{/admin/qualifications}">Menaxho kualifikimet</a>
+            </article>
+            <article class="card">
+                <h2>Certifikimet</h2>
+                <p>Certifikata programimi dhe të tjera.</p>
+                <a class="btn primary" th:href="@{/admin/certifications}">Menaxho certifikimet</a>
+            </article>
+        </div>
+    </section>
+</main>
+</body>
+</html>

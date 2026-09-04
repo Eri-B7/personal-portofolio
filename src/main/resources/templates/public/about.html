@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments :: header(${activePage})}"></header>
+<main class="container">
+    <section class="page-header">
+        <h1>Rreth meje</h1>
+        <p class="lead" th:text="${profile.shortBio}">Bio</p>
+        <p th:if="${profile.studyProgram}">
+            <strong>Programi i studimit:</strong>
+            <span th:text="${profile.studyProgram}">Bachelor/Master</span>
+        </p>
+    </section>
+
+    <section>
+        <h2>Kualifikimet</h2>
+        <div class="list">
+            <article class="list-item" th:each="q : ${qualifications}">
+                <h3 th:text="${q.title}">Title</h3>
+                <p class="muted">
+                    <span th:text="${q.institution}">Institution</span>
+                    <span th:if="${q.yearObtained}" th:text="' · ' + ${q.yearObtained}"></span>
+                </p>
+                <p th:if="${q.description}" th:text="${q.description}">Description</p>
+            </article>
+            <p th:if="${#lists.isEmpty(qualifications)}" class="muted">Nuk ka kualifikime të publikuara ende.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Certifikimet</h2>
+        <div class="list">
+            <article class="list-item" th:each="c : ${certifications}">
+                <h3 th:text="${c.title}">Title</h3>
+                <p class="muted">
+                    <span th:text="${c.issuer}">Issuer</span>
+                    <span th:if="${c.yearObtained}" th:text="' · ' + ${c.yearObtained}"></span>
+                </p>
+                <p th:if="${c.description}" th:text="${c.description}">Description</p>
+                <p th:if="${c.credentialUrl}">
+                    <a th:href="${c.credentialUrl}" target="_blank" rel="noopener">Shiko kredencialin</a>
+                </p>
+            </article>
+            <p th:if="${#lists.isEmpty(certifications)}" class="muted">Nuk ka certifikime të publikuara ende.</p>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

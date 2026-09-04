@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments :: header(${activePage})}"></header>
+<main class="container">
+    <section class="hero">
+        <div class="hero-text">
+            <p class="eyebrow">Website personal</p>
+            <h1 th:text="${profile.fullName}">Emri Mbiemri</h1>
+            <p class="lead" th:text="${profile.shortBio}">Bio</p>
+            <p class="muted" th:if="${profile.studyProgram}" th:text="${profile.studyProgram}">Program</p>
+            <div class="actions">
+                <a class="btn primary" th:href="@{/services}">Shërbimet</a>
+                <a class="btn ghost" th:href="@{/contact}">Kontakti</a>
+            </div>
+        </div>
+        <div class="hero-media">
+            <img th:src="@{${profile.photoUrl}}" th:alt="${profile.fullName}" width="320" height="320">
+        </div>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

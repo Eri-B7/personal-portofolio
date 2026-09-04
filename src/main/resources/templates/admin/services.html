@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body class="admin-body">
+<header th:replace="~{fragments :: header('admin')}"></header>
+<main class="container admin-layout">
+    <aside th:replace="~{fragments :: admin-nav(${activePage})}"></aside>
+    <section>
+        <h1>Shërbimet</h1>
+        <p class="muted">Shto, ndrysho ose fshi opsionet që shfaqen te faqja publike <strong>Services</strong>.</p>
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+        <form th:action="@{/admin/services}" th:object="${serviceForm}" method="post" class="form panel">
+            <h2 th:text="${editing} ? 'Ndrysho shërbimin' : 'Shto shërbim të ri'">Shto shërbim</h2>
+            <input type="hidden" th:if="*{id != null}" th:field="*{id}">
+            <label>Titulli <input type="text" th:field="*{title}" required></label>
+            <label>Përshkrimi <textarea th:field="*{description}" rows="3" required></textarea></label>
+            <label>Ikona (opsionale) <input type="text" th:field="*{icon}"></label>
+            <label>Renditja <input type="number" th:field="*{sortOrder}"></label>
+            <label class="checkbox"><input type="checkbox" th:field="*{active}"> Aktive (duket te vizitorët)</label>
+            <div class="actions">
+                <button type="submit" class="btn primary" th:text="${editing} ? 'Ruaj ndryshimet' : 'Shto'">Shto</button>
+                <a th:if="${editing}" class="btn ghost" th:href="@{/admin/services}">Anulo</a>
+            </div>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Titulli</th>
+                    <th>Aktive</th>
+                    <th>Renditja</th>
+                    <th>Veprime</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="service : ${services}">
+                    <td th:text="${service.title}">Title</td>
+                    <td th:text="${service.active} ? 'Po' : 'Jo'">Po</td>
+                    <td th:text="${service.sortOrder}">0</td>
+                    <td class="row-actions">
+                        <a class="btn ghost small" th:href="@{/admin/services/{id}/edit(id=${service.id})}">Ndrysho</a>
+                        <form th:action="@{/admin/services/{id}/delete(id=${service.id})}" method="post">
+                            <button type="submit" class="btn danger small"
+                                    onclick="return confirm('Fshi këtë shërbim?')">Fshi</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

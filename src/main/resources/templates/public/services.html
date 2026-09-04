@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments :: header(${activePage})}"></header>
+<main class="container">
+    <section class="page-header">
+        <h1>Shërbimet</h1>
+        <p class="lead">Shërbimet që ofroj aktualisht.</p>
+    </section>
+
+    <div class="cards">
+        <article class="card" th:each="service : ${services}">
+            <h2 th:text="${service.title}">Service</h2>
+            <p th:text="${service.description}">Description</p>
+        </article>
+        <p th:if="${#lists.isEmpty(services)}" class="muted">Nuk ka shërbime aktive.</p>
+    </div>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

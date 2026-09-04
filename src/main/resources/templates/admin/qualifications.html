@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body class="admin-body">
+<header th:replace="~{fragments :: header('admin')}"></header>
+<main class="container admin-layout">
+    <aside th:replace="~{fragments :: admin-nav(${activePage})}"></aside>
+    <section>
+        <h1>Kualifikimet</h1>
+        <p class="muted">Shto, ndrysho ose fshi kualifikimet që shfaqen te faqja <strong>About</strong>.</p>
+        <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+        <form th:action="@{/admin/qualifications}" th:object="${qualificationForm}" method="post" class="form panel">
+            <h2 th:text="${editing} ? 'Ndrysho kualifikimin' : 'Shto kualifikim të ri'">Shto kualifikim</h2>
+            <input type="hidden" th:if="*{id != null}" th:field="*{id}">
+            <label>Titulli <input type="text" th:field="*{title}" required></label>
+            <label>Institucioni <input type="text" th:field="*{institution}"></label>
+            <label>Viti <input type="text" th:field="*{yearObtained}"></label>
+            <label>Përshkrimi <textarea th:field="*{description}" rows="3"></textarea></label>
+            <label>Renditja <input type="number" th:field="*{sortOrder}"></label>
+            <div class="actions">
+                <button type="submit" class="btn primary" th:text="${editing} ? 'Ruaj ndryshimet' : 'Shto'">Shto</button>
+                <a th:if="${editing}" class="btn ghost" th:href="@{/admin/qualifications}">Anulo</a>
+            </div>
+        </form>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Titulli</th>
+                    <th>Institucioni</th>
+                    <th>Viti</th>
+                    <th>Veprime</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="q : ${qualifications}">
+                    <td th:text="${q.title}">Title</td>
+                    <td th:text="${q.institution}">Institution</td>
+                    <td th:text="${q.yearObtained}">Year</td>
+                    <td class="row-actions">
+                        <a class="btn ghost small" th:href="@{/admin/qualifications/{id}/edit(id=${q.id})}">Ndrysho</a>
+                        <form th:action="@{/admin/qualifications/{id}/delete(id=${q.id})}" method="post">
+                            <button type="submit" class="btn danger small"
+                                    onclick="return confirm('Fshi këtë kualifikim?')">Fshi</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

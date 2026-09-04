@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body class="admin-body">
+<header th:replace="~{fragments :: header('admin')}"></header>
+<main class="container admin-layout">
+    <aside th:replace="~{fragments :: admin-nav(${activePage})}"></aside>
+    <section>
+        <h1>Mesazhet</h1>
+        <div class="list">
+            <article class="list-item" th:each="msg : ${messages}">
+                <h3 th:text="${msg.subject != null and !#strings.isEmpty(msg.subject)} ? ${msg.subject} : 'Pa subjekt'">Subject</h3>
+                <p class="muted">
+                    <span th:text="${msg.name}">Name</span> ·
+                    <a th:href="'mailto:' + ${msg.email}" th:text="${msg.email}">email</a> ·
+                    <span th:text="${#temporals.format(msg.createdAt, 'dd.MM.yyyy HH:mm')}"></span>
+                </p>
+                <p th:text="${msg.message}">Message</p>
+            </article>
+            <p th:if="${#lists.isEmpty(messages)}" class="muted">Nuk ka mesazhe.</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="sq" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments :: header(${activePage})}"></header>
+<main class="container narrow">
+    <section class="page-header">
+        <h1>Kontakt</h1>
+        <p class="lead">
+            Më shkruaj drejtpërdrejt
+            <a th:if="${profile.email}" th:href="'mailto:' + ${profile.email}" th:text="${profile.email}">email</a>
+            ose përdor formularin.
+        </p>
+    </section>
+
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+
+    <form th:action="@{/contact}" th:object="${contactForm}" method="post" class="form">
+        <label>
+            Emri
+            <input type="text" th:field="*{name}" required>
+            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </label>
+        <label>
+            Email
+            <input type="email" th:field="*{email}" required>
+            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </label>
+        <label>
+            Subjekti
+            <input type="text" th:field="*{subject}">
+        </label>
+        <label>
+            Mesazhi
+            <textarea th:field="*{message}" rows="6" required></textarea>
+            <span class="error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></span>
+        </label>
+        <button type="submit" class="btn primary">Dërgo</button>
+    </form>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>
